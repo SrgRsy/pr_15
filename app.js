@@ -10,6 +10,8 @@ const users = require('./routes/users');
 const authoriz = require('./routes/authoriz');
 const cookieParser = require('cookie-parser');
 
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,11 +24,19 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 });
 
 
-
+app.use(requestLogger);
+app.get('/crash-test', () => {
+  setTimeout(() => {
+      throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.use('/', authoriz);
 app.use('/users', auth, users);
 app.use('/cards', auth, cards);
+
+app.use(errorLogger);
+
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
 
