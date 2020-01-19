@@ -7,7 +7,7 @@ authRout.post('/signup', celebrate({
     email: Joi.string().required().email(),
     password: Joi.string().required().min(8),
     name: Joi.string().required().min(2).max(30),
-    avatar: Joi.string().domain({ tlds: { allow: ['com', 'net', 'ru'] } }),
+    avatar: Joi.string().uri(),
     about: Joi.string().min(2).max(30),
   }),
 }), createUser);

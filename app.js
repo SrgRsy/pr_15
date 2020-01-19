@@ -9,6 +9,7 @@ const cards = require('./routes/cards');
 const users = require('./routes/users');
 const authoriz = require('./routes/authoriz');
 const cookieParser = require('cookie-parser');
+const { errors } = require('celebrate');
 
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
@@ -34,6 +35,7 @@ app.get('/crash-test', () => {
 app.use('/', authoriz);
 app.use('/users', auth, users);
 app.use('/cards', auth, cards);
+app.use(errors());
 
 app.use(errorLogger);
 
