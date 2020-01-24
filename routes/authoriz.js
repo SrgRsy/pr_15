@@ -1,6 +1,6 @@
 const authRout = require('express').Router();
-const { createUser, login } = require('../controllers/users');
 const { celebrate, Joi } = require('celebrate');
+const { createUser, login } = require('../controllers/users');
 
 authRout.post('/signup', celebrate({
   body: Joi.object().keys({

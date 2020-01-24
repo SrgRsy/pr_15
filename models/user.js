@@ -14,39 +14,40 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     required: true,
-    maxlength: 30
+    maxlength: 30,
   },
   avatar: {
     type: String,
     validate: {
-      validator: function (str) {
+      validator(str) {
         return validator.isURL(str);
       },
-      message: `Эта строка должна быть URL`
+      message: 'Эта строка должна быть URL',
     },
-    required: true
+    required: true,
   },
   email: {
     type: String,
     validate: {
-      validator: function (str) {
+      validator(str) {
         return validator.isEmail(str);
       },
-      message: `Эта строка должна быть @Email`
+      message: 'Эта строка должна быть @Email',
     },
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
     required: true,
     select: false,
-    minlength: 8
-  }
+    minlength: 8,
+  },
 
 });
 
 
+// eslint-disable-next-line func-names
 userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {

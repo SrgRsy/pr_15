@@ -2,6 +2,7 @@
 // импорт модели
 const Card = require('../models/card');
 const NotFoundError = require('../errors/not-found-err');
+const NotEnoughRight = require('../errors/not-enough-right');
 
 module.exports.createCard = (req, res, next) => {
   Card.create({
@@ -22,12 +23,14 @@ module.exports.deleteCard = (req, res, next) => {
       }
       if (card.owner.toString() === req.user._id) {
         Card.findByIdAndRemove(req.params.cardId)
-          .then((cardRemove) => res.status(403).res.send({ remove: cardRemove }))
+          .then((cardRemove) => res.send({ remove: cardRemove }))
           .catch(next);
       } else {
-        next(new NotFoundError('Недостаточно прав'));
+        next(new NotEnoughRight('Недостаточно прав'));
       }
-    });
+    })
+    .then((card) => res.send({ data: card }))
+    .catch(next);
 };
 
 

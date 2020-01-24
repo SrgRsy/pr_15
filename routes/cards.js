@@ -12,9 +12,9 @@ cardsRout.post('/', celebrate({
 }), createCard);
 
 
-cardsRout.delete('/:cardId',celebrate({
+cardsRout.delete('/:cardId', celebrate({
   params: Joi.object().keys({
-    cardId: Joi.objectId()
+    cardId: Joi.objectId(),
   }),
 }), deleteCard);
 
