@@ -3,11 +3,11 @@ Yandex.Praktikum
 
 https://github.com/SrgRsy/pr_15
 
-**v0.4**
+**v0.6**
 
 
 
-Адрес на серврере : **https://mesto-testo.site** , 84.201.159.33
+Адрес на серврере : **https://mesto-testo.site** , 84.201.133.92
 
 
 
