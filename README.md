@@ -7,7 +7,7 @@ https://github.com/SrgRsy/pr_15
 
 
 
-Адрес на серврере : **https://mesto-testo.site** , 84.201.130.10
+Адрес на серврере : **https://mesto-testo.site** , 84.201.133.92
 
 
 
