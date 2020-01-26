@@ -3,7 +3,7 @@ Yandex.Praktikum
 
 https://github.com/SrgRsy/pr_15
 
-**v0.6**
+**v0.8**
 
 
 
