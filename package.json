@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "cross-env NODE_ENV=production node app.js",
+    "dev": "cross-env NODE_ENV=dev nodemon app.js"
   },
   "author": "Sergey Ryasniy",
   "license": "ISC",
@@ -23,6 +23,7 @@
     "body-parser": "^1.19.0",
     "celebrate": "^11.0.1",
     "cookie-parser": "^1.4.4",
+    "cross-env": "^7.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-winston": "^4.0.2",
