@@ -1,33 +1,41 @@
 /* eslint-disable no-undef */
 // импорт модели
 const Card = require('../models/card');
+const NotFoundError = require('../errors/not-found-err');
+const NotEnoughRight = require('../errors/not-enough-right');
 
-module.exports.createCard = (req, res) => {
-  const { name, link, owner, likes, createdAt } = req.body;
-  Card.create({ name, link, owner, likes, createdAt })
-    .then(card => res.send({ data: card }))
-    .catch((err) => res.status(500).send({ message: err.message }));
+module.exports.createCard = (req, res, next) => {
+  Card.create({
+    name: req.body.name,
+    link: req.body.link,
+    owner: req.user._id,
+  })
+    .then((card) => res.send({ data: card }))
+    .catch(next);
 };
 
 
-module.exports.deleteCard = (req, res) => {
+module.exports.deleteCard = (req, res, next) => {
   Card.findById(req.params.cardId)
     .then((card) => {
+      if (card === null) {
+        throw new NotFoundError('Карточка не найдена');
+      }
       if (card.owner.toString() === req.user._id) {
         Card.findByIdAndRemove(req.params.cardId)
-          .then((cardRemove) => res.status(500).res.send({ remove: cardRemove }))
-          .catch((err) => res.status(500).send({ message: err }));
+          .then((cardRemove) => res.send({ remove: cardRemove }))
+          .catch(next);
       } else {
-        res.status(403).send({ message: "Недостаточно прав" });
+        next(new NotEnoughRight('Недостаточно прав'));
       }
     })
+    .then((card) => res.send({ data: card }))
+    .catch(next);
 };
 
 
-module.exports.getCard = (req, res) => {
+module.exports.getCard = (req, res, next) => {
   Card.find({})
-    .then(card => res.send({ data: card }))
-    .catch((err) => res.status(500).send({ message: err.message }));
+    .then((card) => res.send({ data: card }))
+    .catch(next);
 };
-
-
